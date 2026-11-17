@@ -1,9 +1,12 @@
 ---
-import '@fontsource/ibm-plex-sans-condensed/500.css';
-import '@fontsource/ibm-plex-sans-condensed/600.css';
-import '@fontsource/ibm-plex-sans/400.css';
-import '@fontsource/ibm-plex-sans/600.css';
-import '@fontsource/ibm-plex-mono/500.css';
+import '@fontsource/barlow/400.css';
+import '@fontsource/barlow/600.css';
+import '@fontsource/barlow-semi-condensed/600.css';
+import '@fontsource/barlow-semi-condensed/700.css';
+import { Image } from 'astro:assets';
+import heroPhoto from '../assets/otwieranie-auta.jpg';
+import ignitionPhoto from '../assets/stacyjka.jpg';
+import fobPhoto from '../assets/kluczyk.jpg';
 import { site } from '../config';
 import { districts, suburbs, allSuburbs } from '../areas';
 
@@ -83,12 +86,20 @@ const schema = {
 
   <main id="tresc">
     <section class="hero">
+      <Image class="hero-photo" src={heroPhoto} alt="Ślusarz otwiera zamek drzwi samochodu" widths={[900, 1400, 2000]} sizes="100vw" loading="eager" />
       <div class="hero-text">
         <h1>Auto zamknięte, kluczyk przepadł? Otwieramy i robimy nowy na miejscu</h1>
         <p>Otwieramy samochody bez uszkodzeń, dorabiamy i programujemy kluczyki, naprawiamy stacyjki i immobilizery. Otwieramy też mieszkania i sejfy. Warszawa i okolice, całą dobę.</p>
         <a class="btn" href={`tel:${site.phoneHref}`}>Zadzwoń: {site.phoneDisplay}</a>
       </div>
 
+    </section>
+
+    <section class="anatomy" aria-labelledby="h-kluczyk">
+      <div class="anatomy-text">
+        <h2 id="h-kluczyk">Co właściwie programujemy</h2>
+        <p>Nowoczesny kluczyk to trzy osobne części. Żeby nowy działał jak oryginał, każda musi zostać przygotowana i sparowana z autem.</p>
+      </div>
       <figure class="drawing">
         <svg viewBox="0 0 560 300" role="img" aria-labelledby="key-title key-desc">
           <title id="key-title">Budowa kluczyka samochodowego</title>
@@ -118,6 +129,8 @@ const schema = {
     </section>
 
     <section class="services" aria-labelledby="h-uslugi">
+      <Image class="services-photo" src={ignitionPhoto} alt="Dłoń przy stacyjce samochodu" widths={[700, 1100]} sizes="(min-width: 960px) 35vw, 92vw" />
+      <div>
       <h2 id="h-uslugi">Usługi</h2>
       <div class="groups">
         {groups.map((g) => (
@@ -134,12 +147,14 @@ const schema = {
           </div>
         ))}
       </div>
+      </div>
     </section>
 
     <section class="checklist" aria-labelledby="h-lista">
       <div class="checklist-head">
         <h2 id="h-lista">Zgubiony jedyny kluczyk? Przygotuj to, zanim przyjedziemy</h2>
         <p>Klucz da się wykonać bez oryginału. Potrzebujemy tylko potwierdzenia, że auto należy do Ciebie, i kilku informacji o samochodzie.</p>
+        <Image class="fob" src={fobPhoto} alt="Składany kluczyk samochodowy z pilotem" widths={[600, 900]} sizes="(min-width: 960px) 40vw, 92vw" />
       </div>
       <ul>
         {checklist.map((c) => (
@@ -204,14 +219,16 @@ const schema = {
     --pcb-dark: #0A5039;
     --copper: #B5652B;
     --line: #C9D1CD;
-    --cond: 'IBM Plex Sans Condensed', 'Arial Narrow', sans-serif;
-    --sans: 'IBM Plex Sans', system-ui, sans-serif;
-    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+    --cond: 'Barlow Semi Condensed', 'Arial Narrow', sans-serif;
+    --sans: 'Barlow', system-ui, sans-serif;
     --pad: clamp(1rem, 5vw, 4rem);
   }
   *, *::before, *::after { box-sizing: border-box; }
   body { margin: 0; background: var(--alu); color: var(--ink); font-family: var(--sans); font-size: 1.0625rem; line-height: 1.6; }
-  a { color: inherit; }
+  a { color: inherit; text-underline-offset: .2em; }
+  ::selection { background: var(--pcb); color: #fff; }
+  html { scrollbar-color: var(--pcb) var(--alu); }
+  body { caret-color: var(--copper); }
   :focus-visible { outline: 2px solid var(--copper); outline-offset: 3px; }
   h1, h2, h3 { font-family: var(--cond); font-weight: 600; margin: 0; line-height: 1.1; letter-spacing: -.005em; }
   p { margin: 0; }
@@ -226,36 +243,34 @@ const schema = {
   .top-call small { display: block; font-family: var(--sans); font-weight: 400; font-size: .8rem; color: var(--muted); }
 
   /* Hero z rysunkiem technicznym */
-  .hero {
-    display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 3rem; align-items: center;
-    padding: clamp(3rem, 7vw, 6rem) var(--pad);
-    background-color: var(--alu);
-    background-image:
-      linear-gradient(rgba(14, 107, 77, .07) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(14, 107, 77, .07) 1px, transparent 1px);
-    background-size: 24px 24px;
-  }
-  .hero h1 { font-size: clamp(2.3rem, 4.8vw, 4.1rem); max-width: 15ch; }
-  .hero-text p { margin: 1.5rem 0 2rem; max-width: 46ch; font-size: 1.15rem; color: var(--muted); }
+  .hero { position: relative; isolation: isolate; min-height: min(84vh, 46rem); display: flex; align-items: flex-end; padding: clamp(3rem, 7vw, 6rem) var(--pad); color: #fff; background: var(--ink); }
+  .hero-photo { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 50% 74%; }
+  .hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(14, 26, 31, .88) 0%, rgba(14, 26, 31, .62) 45%, rgba(14, 26, 31, .1) 100%); }
+  .hero-text { max-width: 40rem; }
+  .hero h1 { font-size: clamp(2.3rem, 5vw, 4.25rem); max-width: 16ch; font-weight: 700; }
+  .hero-text p { margin: 1.5rem 0 2rem; max-width: 46ch; font-size: 1.15rem; color: #D6E0DD; }
 
   .btn { display: inline-block; background: var(--pcb); color: #fff; text-decoration: none; font-weight: 600; padding: .9rem 1.5rem; border-radius: 6px; }
   .btn:hover { background: var(--pcb-dark); }
   .btn-light { background: #fff; color: var(--pcb-dark); }
   .btn-light:hover { background: var(--alu); }
 
-  .drawing { margin: 0; background: var(--white); border: 1px solid var(--line); border-radius: 8px; padding: 1.5rem 1.5rem 1.25rem; }
+  .anatomy { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 3rem; align-items: center; padding: clamp(3.5rem, 7vw, 6rem) var(--pad); }
+  .anatomy-text p { margin-top: 1.25rem; color: var(--muted); max-width: 44ch; }
+  .drawing { margin: 0; }
   .drawing svg { width: 100%; height: auto; display: block; }
   .key rect, .key circle, .key path { fill: none; stroke: var(--ink); stroke-width: 2.5; stroke-linejoin: round; }
   .key .transponder { fill: rgba(181, 101, 43, .15); stroke: var(--copper); }
   .key .cuts { stroke-width: 2; }
   .callouts path { fill: none; stroke: var(--copper); stroke-width: 1.5; }
-  .callouts text { font-family: var(--mono); font-size: 17px; font-weight: 500; fill: var(--ink); }
+  .callouts text { font-family: var(--cond); font-size: 19px; font-weight: 700; fill: var(--ink); }
   .callouts .sub { font-family: var(--sans); font-size: 13px; font-weight: 400; fill: var(--muted); }
   .drawing figcaption { margin-top: .75rem; padding-top: .75rem; border-top: 1px dashed var(--line); font-size: .95rem; color: var(--muted); }
 
   section h2 { font-size: clamp(1.9rem, 3.4vw, 2.8rem); }
 
-  .services { background: var(--white); padding: clamp(3.5rem, 7vw, 6rem) var(--pad); border-block: 1px solid var(--line); }
+  .services { background: var(--white); padding: clamp(3.5rem, 7vw, 6rem) var(--pad); border-block: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1.6fr); gap: clamp(2rem, 4vw, 4rem); align-items: start; }
+  .services-photo { width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 4px; position: sticky; top: 1.5rem; }
   .services h2 { margin-bottom: 2.5rem; }
   .groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem; }
   .group h3 { font-size: 1.15rem; color: var(--pcb); padding-bottom: .6rem; border-bottom: 2px solid var(--pcb); font-family: var(--sans); }
@@ -266,8 +281,9 @@ const schema = {
 
   .checklist { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 3rem; padding: clamp(3.5rem, 7vw, 6rem) var(--pad); }
   .checklist-head p { margin-top: 1.25rem; color: var(--muted); max-width: 46ch; }
-  .checklist ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
-  .checklist li { display: grid; grid-template-columns: 1.5rem 1fr; gap: 1rem; background: var(--white); border: 1px solid var(--line); border-radius: 8px; padding: 1.1rem 1.25rem; }
+  .checklist ul { list-style: none; margin: 0; padding: 0; }
+  .checklist li { display: grid; grid-template-columns: 1.5rem 1fr; gap: 1rem; padding: 1.15rem 0; border-top: 1px solid var(--line); }
+  .fob { margin-top: 2rem; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 4px; }
   .checklist li svg { width: 1.5rem; height: 1.5rem; margin-top: .15rem; fill: none; stroke: var(--pcb); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .checklist li strong { font-family: var(--cond); font-size: 1.2rem; }
   .checklist li p { color: var(--muted); }
@@ -284,10 +300,11 @@ const schema = {
 
   .faq { padding: clamp(3.5rem, 7vw, 6rem) var(--pad); max-width: 64rem; }
   .faq h2 { margin-bottom: 2rem; }
-  .faq details { background: var(--white); border: 1px solid var(--line); border-radius: 8px; margin-bottom: .75rem; }
-  .faq summary { cursor: pointer; padding: 1.1rem 1.25rem; font-weight: 600; }
+  .faq details { border-top: 1px solid var(--line); }
+  .faq details:last-of-type { border-bottom: 1px solid var(--line); }
+  .faq summary { cursor: pointer; padding: 1.1rem 0; font-weight: 600; font-size: 1.1rem; }
   .faq summary::marker { color: var(--pcb); }
-  .faq details p { padding: 0 1.25rem 1.25rem; color: var(--muted); max-width: 62ch; }
+  .faq details p { padding: 0 0 1.25rem; color: var(--muted); max-width: 62ch; }
 
   .final { background: var(--pcb); color: #fff; padding: clamp(3rem, 6vw, 4.5rem) var(--pad); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; }
   .final p { font-family: var(--cond); font-weight: 600; font-size: clamp(1.5rem, 3vw, 2.25rem); max-width: 26ch; line-height: 1.15; }
@@ -297,13 +314,14 @@ const schema = {
   .dock { position: fixed; left: .75rem; right: .75rem; bottom: .75rem; z-index: 5; display: none; background: var(--pcb); color: #fff; text-align: center; text-decoration: none; font-weight: 600; padding: 1rem; border-radius: 8px; box-shadow: 0 6px 20px rgba(14, 26, 31, .3); }
 
   @media (max-width: 960px) {
-    .hero, .checklist, .groups, .area-grid { grid-template-columns: 1fr; }
+    .anatomy, .services, .checklist, .groups, .area-grid { grid-template-columns: 1fr; }
+    .services-photo { position: static; aspect-ratio: 16 / 10; }
+    .hero::before { background: linear-gradient(0deg, rgba(14, 26, 31, .92) 0%, rgba(14, 26, 31, .55) 60%, rgba(14, 26, 31, .2) 100%); }
   }
   @media (max-width: 640px) {
     .top-call { display: none; }
     .brand { font-size: 1.2rem; }
     .cells { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .drawing { padding: 1rem; }
     .dock { display: block; }
     .foot { padding-bottom: 6rem; }
   }
