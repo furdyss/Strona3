@@ -7,16 +7,16 @@ import '@fontsource/ibm-plex-mono/500.css';
 import { site } from '../config';
 import { districts, suburbs, allSuburbs } from '../areas';
 
-const title = `Klucze samochodowe, immobilizery i ślusarz 24h – Warszawa | ${site.name}`;
-const description = `Dorabianie i programowanie kluczy samochodowych, naprawa stacyjek i immobilizerów, otwieranie aut, mieszkań i sejfów. Dojazd do klienta całą dobę – Warszawa i okolice. Tel. ${site.phoneDisplay}.`;
+const title = `Awaryjne otwieranie samochodów 24h Warszawa – klucze, stacyjki, immobilizery | ${site.name}`;
+const description = `Awaryjne otwieranie samochodów, dorabianie i programowanie kluczy, naprawa stacyjek i immobilizerów, otwieranie aut, mieszkań i sejfów. Dojazd do klienta całą dobę – Warszawa i okolice. Tel. ${site.phoneDisplay}.`;
 
 const groups = [
   {
     name: 'Samochód',
     items: [
+      { name: 'Awaryjne otwieranie samochodów', text: 'Kluczyk zatrzaśnięty w kabinie albo w bagażniku. Otwieramy auto bez uszkadzania zamka, uszczelek i szyb.' },
       { name: 'Dorabianie kluczy samochodowych', text: 'Zapasowy kluczyk albo nowy w miejsce zgubionego. Wycinamy grot, kodujemy transponder i parujemy pilota z autem.' },
       { name: 'Naprawa stacyjek i immobilizerów', text: 'Stacyjka zablokowana, kluczyk się nie przekręca, komunikat o braku klucza. Diagnozujemy przyczynę i naprawiamy.' },
-      { name: 'Awaryjne otwieranie samochodów', text: 'Kluczyk zatrzaśnięty w kabinie albo w bagażniku. Otwieramy auto bez uszkadzania zamka, uszczelek i szyb.' },
     ],
   },
   {
@@ -84,8 +84,8 @@ const schema = {
   <main id="tresc">
     <section class="hero">
       <div class="hero-text">
-        <h1>Nowy kluczyk do auta, zrobiony tam, gdzie stoi samochód</h1>
-        <p>Dorabiamy i programujemy klucze samochodowe, naprawiamy stacyjki i immobilizery. Otwieramy też auta, mieszkania i sejfy. Warszawa i okolice, całą dobę.</p>
+        <h1>Auto zamknięte, kluczyk przepadł? Otwieramy i robimy nowy na miejscu</h1>
+        <p>Otwieramy samochody bez uszkodzeń, dorabiamy i programujemy kluczyki, naprawiamy stacyjki i immobilizery. Otwieramy też mieszkania i sejfy. Warszawa i okolice, całą dobę.</p>
         <a class="btn" href={`tel:${site.phoneHref}`}>Zadzwoń: {site.phoneDisplay}</a>
       </div>
 
@@ -187,7 +187,7 @@ const schema = {
   </main>
 
   <footer class="foot">
-    <p>{site.name}. Klucze samochodowe, immobilizery i ślusarz 24h. Warszawa i okolice.</p>
+    <p>{site.name}. Otwieranie samochodów, klucze, immobilizery i ślusarz 24h. Warszawa i okolice.</p>
   </footer>
 
   <a class="dock" href={`tel:${site.phoneHref}`}>Zadzwoń: {site.phoneDisplay}</a>
@@ -300,9 +300,12 @@ const schema = {
     .hero, .checklist, .groups, .area-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 640px) {
+    .top-call { display: none; }
+    .brand { font-size: 1.2rem; }
     .cells { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .drawing { padding: 1rem; }
     .dock { display: block; }
     .foot { padding-bottom: 6rem; }
   }
+  .top-call { white-space: nowrap; }
 </style>
