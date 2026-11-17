@@ -1,0 +1,308 @@
+---
+import '@fontsource/ibm-plex-sans-condensed/500.css';
+import '@fontsource/ibm-plex-sans-condensed/600.css';
+import '@fontsource/ibm-plex-sans/400.css';
+import '@fontsource/ibm-plex-sans/600.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import { site } from '../config';
+import { districts, suburbs, allSuburbs } from '../areas';
+
+const title = `Klucze samochodowe, immobilizery i ślusarz 24h – Warszawa | ${site.name}`;
+const description = `Dorabianie i programowanie kluczy samochodowych, naprawa stacyjek i immobilizerów, otwieranie aut, mieszkań i sejfów. Dojazd do klienta całą dobę – Warszawa i okolice. Tel. ${site.phoneDisplay}.`;
+
+const groups = [
+  {
+    name: 'Samochód',
+    items: [
+      { name: 'Dorabianie kluczy samochodowych', text: 'Zapasowy kluczyk albo nowy w miejsce zgubionego. Wycinamy grot, kodujemy transponder i parujemy pilota z autem.' },
+      { name: 'Naprawa stacyjek i immobilizerów', text: 'Stacyjka zablokowana, kluczyk się nie przekręca, komunikat o braku klucza. Diagnozujemy przyczynę i naprawiamy.' },
+      { name: 'Awaryjne otwieranie samochodów', text: 'Kluczyk zatrzaśnięty w kabinie albo w bagażniku. Otwieramy auto bez uszkadzania zamka, uszczelek i szyb.' },
+    ],
+  },
+  {
+    name: 'Dom i firma',
+    items: [
+      { name: 'Awaryjne otwieranie drzwi', text: 'Mieszkania, domy, biura. Zatrzaśnięte drzwi, zgubione klucze, uszkodzona wkładka.' },
+      { name: 'Awaryjne otwieranie sejfów', text: 'Zamki szyfrowe, kluczowe i elektroniczne. Odzyskujemy dostęp do sejfu na miejscu.' },
+      { name: 'Serwis i naprawa zamków Gerda', text: 'Regulacja, naprawa i wymiana zamków oraz wkładek Gerda.' },
+      { name: 'Montaż i wymiana zamków', text: 'Nowe zamki i wkładki dobrane do drzwi. Także od razu po otwarciu awaryjnym.' },
+    ],
+  },
+];
+
+const checklist = [
+  { name: 'Dowód rejestracyjny', text: 'Potwierdza, że auto jest Twoje, i podaje numer VIN, po którym dobieramy klucz.' },
+  { name: 'Dokument tożsamości', text: 'Musi zgadzać się z danymi właściciela albo użytkownika pojazdu.' },
+  { name: 'Marka, model i rocznik', text: 'Podaj je przez telefon. Dzięki temu zabieramy właściwy grot i sprzęt do programowania.' },
+  { name: 'Miejsce, gdzie stoi auto', text: 'Przyjeżdżamy tam. Nie trzeba holować samochodu do serwisu.' },
+];
+
+const faq = [
+  { q: 'Czy nowy kluczyk uruchomi auto, a nie tylko otworzy drzwi?', a: 'Tak. Programujemy transponder, który odczytuje immobilizer, więc kluczyk zarówno otwiera, jak i uruchamia samochód.' },
+  { q: 'Zgubiłem jedyny kluczyk. Co teraz?', a: 'Zadzwoń i przygotuj dowód rejestracyjny. Kluczyk można wykonać bez oryginału.' },
+  { q: 'Czy stary, zgubiony kluczyk dalej będzie odpalał auto?', a: 'Przy programowaniu nowego klucza możemy usunąć z pamięci immobilizera kluczyki, których już nie masz.' },
+  { q: 'Pracujecie w nocy i w weekendy?', a: 'Tak, całą dobę, każdego dnia.' },
+  { q: 'Jaki obszar obsługujecie?', a: `Wszystkie dzielnice Warszawy, okolice i przedmieścia, m.in. ${allSuburbs.slice(12, 18).join(', ')}.` },
+];
+
+const allServices = groups.flatMap((g) => g.items);
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Locksmith',
+  name: site.name,
+  telephone: site.phoneHref,
+  url: site.url,
+  openingHours: 'Mo-Su 00:00-23:59',
+  areaServed: [{ '@type': 'City', name: 'Warszawa' }, ...allSuburbs.map((n) => ({ '@type': 'City', name: n }))],
+  hasOfferCatalog: { '@type': 'OfferCatalog', name: 'Usługi ślusarskie', itemListElement: allServices.map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.name } })) },
+};
+---
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={site.url + '/'} />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0E6B4D" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pl_PL" />
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+</head>
+<body>
+  <a class="skip" href="#tresc">Przejdź do treści</a>
+
+  <header class="top">
+    <a class="brand" href="/"><span class="chip" aria-hidden="true"></span>{site.name}</a>
+    <a class="top-call" href={`tel:${site.phoneHref}`}>{site.phoneDisplay}<small>całą dobę</small></a>
+  </header>
+
+  <main id="tresc">
+    <section class="hero">
+      <div class="hero-text">
+        <h1>Nowy kluczyk do auta, zrobiony tam, gdzie stoi samochód</h1>
+        <p>Dorabiamy i programujemy klucze samochodowe, naprawiamy stacyjki i immobilizery. Otwieramy też auta, mieszkania i sejfy. Warszawa i okolice, całą dobę.</p>
+        <a class="btn" href={`tel:${site.phoneHref}`}>Zadzwoń: {site.phoneDisplay}</a>
+      </div>
+
+      <figure class="drawing">
+        <svg viewBox="0 0 560 300" role="img" aria-labelledby="key-title key-desc">
+          <title id="key-title">Budowa kluczyka samochodowego</title>
+          <desc id="key-desc">Kluczyk składa się z pilota, transpondera odczytywanego przez immobilizer i metalowego grota do zamka i stacyjki.</desc>
+          <g class="key">
+            <rect x="40" y="110" width="170" height="96" rx="34" />
+            <circle cx="92" cy="146" r="13" />
+            <circle cx="92" cy="176" r="9" />
+            <rect class="transponder" x="138" y="140" width="40" height="36" rx="4" />
+            <path d="M210 140 H508 L522 158 L508 176 H210" />
+            <path class="cuts" d="M244 176 V168 H268 V176 M300 176 V164 H330 V176 M364 176 V170 H390 V176 M424 176 V162 H452 V176" />
+          </g>
+          <g class="callouts">
+            <path d="M92 133 V60 H130" />
+            <text x="138" y="56">pilot</text>
+            <text x="138" y="74" class="sub">centralny zamek</text>
+            <path d="M158 176 V250 H196" />
+            <text x="204" y="246">transponder</text>
+            <text x="204" y="264" class="sub">odczytuje go immobilizer</text>
+            <path d="M380 140 V82 H416" />
+            <text x="424" y="78">grot</text>
+            <text x="424" y="96" class="sub">zamek i stacyjka</text>
+          </g>
+        </svg>
+        <figcaption>Programujemy wszystkie trzy części, więc nowy kluczyk otwiera auto pilotem, pasuje do zamka i uruchamia silnik.</figcaption>
+      </figure>
+    </section>
+
+    <section class="services" aria-labelledby="h-uslugi">
+      <h2 id="h-uslugi">Usługi</h2>
+      <div class="groups">
+        {groups.map((g) => (
+          <div class="group">
+            <h3>{g.name}</h3>
+            <dl>
+              {g.items.map((s) => (
+                <div>
+                  <dt>{s.name}</dt>
+                  <dd>{s.text}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="checklist" aria-labelledby="h-lista">
+      <div class="checklist-head">
+        <h2 id="h-lista">Zgubiony jedyny kluczyk? Przygotuj to, zanim przyjedziemy</h2>
+        <p>Klucz da się wykonać bez oryginału. Potrzebujemy tylko potwierdzenia, że auto należy do Ciebie, i kilku informacji o samochodzie.</p>
+      </div>
+      <ul>
+        {checklist.map((c) => (
+          <li>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="1.5" y="1.5" width="17" height="17" rx="3" /><path d="M5.5 10.5l3 3 6-7" /></svg>
+            <div><strong>{c.name}</strong><p>{c.text}</p></div>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="area" aria-labelledby="h-obszar">
+      <h2 id="h-obszar">Obsługujemy każdą dzielnicę Warszawy, okolice i przedmieścia</h2>
+      <p class="area-lede">Dojeżdżamy z narzędziami do auta, domu albo biura. Lista poniżej to miejsca, w których jesteśmy najczęściej, ale nie jedyne.</p>
+      <div class="area-grid">
+        <div class="area-col">
+          <h3>Warszawa, 18 dzielnic</h3>
+          <ul class="cells">
+            {districts.map((d) => <li>{d}</li>)}
+          </ul>
+        </div>
+        <div class="area-col">
+          <h3>Okolice Warszawy</h3>
+          {Object.entries(suburbs).map(([dir, list]) => (
+            <p class="sub-row"><span>{dir}</span>{list.join(', ')}</p>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="faq" aria-labelledby="h-faq">
+      <h2 id="h-faq">Pytania o klucze i dojazd</h2>
+      {faq.map((f) => (
+        <details>
+          <summary>{f.q}</summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </section>
+
+    <section class="final">
+      <p>Auto stoi, drzwi zamknięte, sejf nie chce się otworzyć?</p>
+      <a class="btn btn-light" href={`tel:${site.phoneHref}`}>Zadzwoń: {site.phoneDisplay}</a>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>{site.name}. Klucze samochodowe, immobilizery i ślusarz 24h. Warszawa i okolice.</p>
+  </footer>
+
+  <a class="dock" href={`tel:${site.phoneHref}`}>Zadzwoń: {site.phoneDisplay}</a>
+</body>
+</html>
+
+<style is:global>
+  :root {
+    --alu: #EDF0EE;
+    --white: #FFFFFF;
+    --ink: #0E1A1F;
+    --muted: #4A5A5F;
+    --pcb: #0E6B4D;
+    --pcb-dark: #0A5039;
+    --copper: #B5652B;
+    --line: #C9D1CD;
+    --cond: 'IBM Plex Sans Condensed', 'Arial Narrow', sans-serif;
+    --sans: 'IBM Plex Sans', system-ui, sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+    --pad: clamp(1rem, 5vw, 4rem);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; background: var(--alu); color: var(--ink); font-family: var(--sans); font-size: 1.0625rem; line-height: 1.6; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--copper); outline-offset: 3px; }
+  h1, h2, h3 { font-family: var(--cond); font-weight: 600; margin: 0; line-height: 1.1; letter-spacing: -.005em; }
+  p { margin: 0; }
+
+  .skip { position: absolute; left: -999px; top: 0; background: var(--ink); color: var(--white); padding: .75rem 1rem; z-index: 10; }
+  .skip:focus { left: 1rem; }
+
+  .top { display: flex; justify-content: space-between; align-items: center; padding: 1rem var(--pad); background: var(--white); border-bottom: 1px solid var(--line); }
+  .brand { display: inline-flex; align-items: center; gap: .6rem; font-family: var(--cond); font-weight: 600; font-size: 1.45rem; text-decoration: none; }
+  .chip { width: 1.1rem; height: 1.1rem; background: var(--pcb); border-radius: 3px; box-shadow: inset 0 0 0 3px var(--pcb), inset 0 0 0 5px #fff; }
+  .top-call { text-decoration: none; font-family: var(--cond); font-weight: 600; font-size: 1.3rem; text-align: right; line-height: 1.1; }
+  .top-call small { display: block; font-family: var(--sans); font-weight: 400; font-size: .8rem; color: var(--muted); }
+
+  /* Hero z rysunkiem technicznym */
+  .hero {
+    display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 3rem; align-items: center;
+    padding: clamp(3rem, 7vw, 6rem) var(--pad);
+    background-color: var(--alu);
+    background-image:
+      linear-gradient(rgba(14, 107, 77, .07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(14, 107, 77, .07) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .hero h1 { font-size: clamp(2.3rem, 4.8vw, 4.1rem); max-width: 15ch; }
+  .hero-text p { margin: 1.5rem 0 2rem; max-width: 46ch; font-size: 1.15rem; color: var(--muted); }
+
+  .btn { display: inline-block; background: var(--pcb); color: #fff; text-decoration: none; font-weight: 600; padding: .9rem 1.5rem; border-radius: 6px; }
+  .btn:hover { background: var(--pcb-dark); }
+  .btn-light { background: #fff; color: var(--pcb-dark); }
+  .btn-light:hover { background: var(--alu); }
+
+  .drawing { margin: 0; background: var(--white); border: 1px solid var(--line); border-radius: 8px; padding: 1.5rem 1.5rem 1.25rem; }
+  .drawing svg { width: 100%; height: auto; display: block; }
+  .key rect, .key circle, .key path { fill: none; stroke: var(--ink); stroke-width: 2.5; stroke-linejoin: round; }
+  .key .transponder { fill: rgba(181, 101, 43, .15); stroke: var(--copper); }
+  .key .cuts { stroke-width: 2; }
+  .callouts path { fill: none; stroke: var(--copper); stroke-width: 1.5; }
+  .callouts text { font-family: var(--mono); font-size: 17px; font-weight: 500; fill: var(--ink); }
+  .callouts .sub { font-family: var(--sans); font-size: 13px; font-weight: 400; fill: var(--muted); }
+  .drawing figcaption { margin-top: .75rem; padding-top: .75rem; border-top: 1px dashed var(--line); font-size: .95rem; color: var(--muted); }
+
+  section h2 { font-size: clamp(1.9rem, 3.4vw, 2.8rem); }
+
+  .services { background: var(--white); padding: clamp(3.5rem, 7vw, 6rem) var(--pad); border-block: 1px solid var(--line); }
+  .services h2 { margin-bottom: 2.5rem; }
+  .groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem; }
+  .group h3 { font-size: 1.15rem; color: var(--pcb); padding-bottom: .6rem; border-bottom: 2px solid var(--pcb); font-family: var(--sans); }
+  .group dl { margin: 0; }
+  .group dl > div { padding: 1.25rem 0; border-bottom: 1px solid var(--line); }
+  .group dt { font-family: var(--cond); font-weight: 600; font-size: 1.4rem; margin-bottom: .3rem; }
+  .group dd { margin: 0; color: var(--muted); max-width: 52ch; }
+
+  .checklist { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 3rem; padding: clamp(3.5rem, 7vw, 6rem) var(--pad); }
+  .checklist-head p { margin-top: 1.25rem; color: var(--muted); max-width: 46ch; }
+  .checklist ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
+  .checklist li { display: grid; grid-template-columns: 1.5rem 1fr; gap: 1rem; background: var(--white); border: 1px solid var(--line); border-radius: 8px; padding: 1.1rem 1.25rem; }
+  .checklist li svg { width: 1.5rem; height: 1.5rem; margin-top: .15rem; fill: none; stroke: var(--pcb); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .checklist li strong { font-family: var(--cond); font-size: 1.2rem; }
+  .checklist li p { color: var(--muted); }
+
+  .area { background: var(--ink); color: #fff; padding: clamp(3.5rem, 7vw, 6rem) var(--pad); }
+  .area h2 { max-width: 24ch; }
+  .area-lede { margin: 1.25rem 0 2.5rem; max-width: 56ch; color: #B8C4C2; }
+  .area-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3rem; }
+  .area h3 { font-family: var(--sans); font-size: 1rem; color: #7FD1AE; margin-bottom: 1rem; }
+  .cells { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid #2C3D43; border-left: 1px solid #2C3D43; }
+  .cells li { padding: .7rem .8rem; border-right: 1px solid #2C3D43; border-bottom: 1px solid #2C3D43; font-family: var(--cond); font-weight: 500; font-size: 1.1rem; }
+  .sub-row { padding: .9rem 0; border-bottom: 1px solid #2C3D43; color: #D4DCDA; }
+  .sub-row span { display: block; font-family: var(--cond); font-weight: 600; color: #fff; font-size: 1.1rem; }
+
+  .faq { padding: clamp(3.5rem, 7vw, 6rem) var(--pad); max-width: 64rem; }
+  .faq h2 { margin-bottom: 2rem; }
+  .faq details { background: var(--white); border: 1px solid var(--line); border-radius: 8px; margin-bottom: .75rem; }
+  .faq summary { cursor: pointer; padding: 1.1rem 1.25rem; font-weight: 600; }
+  .faq summary::marker { color: var(--pcb); }
+  .faq details p { padding: 0 1.25rem 1.25rem; color: var(--muted); max-width: 62ch; }
+
+  .final { background: var(--pcb); color: #fff; padding: clamp(3rem, 6vw, 4.5rem) var(--pad); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; }
+  .final p { font-family: var(--cond); font-weight: 600; font-size: clamp(1.5rem, 3vw, 2.25rem); max-width: 26ch; line-height: 1.15; }
+
+  .foot { padding: 2rem var(--pad); color: var(--muted); font-size: .95rem; }
+
+  .dock { position: fixed; left: .75rem; right: .75rem; bottom: .75rem; z-index: 5; display: none; background: var(--pcb); color: #fff; text-align: center; text-decoration: none; font-weight: 600; padding: 1rem; border-radius: 8px; box-shadow: 0 6px 20px rgba(14, 26, 31, .3); }
+
+  @media (max-width: 960px) {
+    .hero, .checklist, .groups, .area-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .cells { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .drawing { padding: 1rem; }
+    .dock { display: block; }
+    .foot { padding-bottom: 6rem; }
+  }
+</style>
